@@ -8,7 +8,7 @@ import pl.agh.student.persistence.model.Tweet;
 import java.util.List;
 
 @Repository("twitterDao")
-public class TweetDao extends AbstractDao implements TweetDaoI {
+public class TweetDao extends AbstractDao {
 
     public void saveTweet(Tweet tweet) {
         persist(tweet);

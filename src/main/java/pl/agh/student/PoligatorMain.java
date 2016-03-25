@@ -1,12 +1,15 @@
 package pl.agh.student;
 
+import org.joda.time.LocalDate;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import pl.agh.student.configuration.AppConfig;
+import pl.agh.student.persistence.dao.UserDao;
 import pl.agh.student.persistence.model.Tweet;
+import pl.agh.student.persistence.model.User;
 import pl.agh.student.service.TweetExtractor;
 import pl.agh.student.service.TweetServiceI;
-import twitter4j.ResponseList;
+import pl.agh.student.service.UserService;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
@@ -16,11 +19,19 @@ public class PoligatorMain {
 
     private static void testDb(AbstractApplicationContext context) {
         TweetServiceI service = (TweetServiceI) context.getBean("tweetService");
+        UserService userService =  (UserService) context.getBean("userService");
 
         Tweet tweet = new Tweet();
         tweet.setId(1L);
         tweet.setText("Some tweet Test");
+        tweet.setCreateDate(new LocalDate());
 
+        User user = new User();
+        user.setName("TEST");
+        user.setId(123);
+        userService.saveUser(user);
+
+        tweet.setUser(user);
         service.saveTweet(tweet);
     }
 
