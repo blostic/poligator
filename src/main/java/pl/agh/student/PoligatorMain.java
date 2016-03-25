@@ -3,7 +3,7 @@ package pl.agh.student;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import pl.agh.student.configuration.AppConfig;
-import pl.agh.student.model.Tweet;
+import pl.agh.student.persistence.model.Tweet;
 import pl.agh.student.service.TweetServiceI;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package pl.agh.student.model;
+package pl.agh.student.persistence.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package pl.agh.student.dao;
+package pl.agh.student.persistence.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

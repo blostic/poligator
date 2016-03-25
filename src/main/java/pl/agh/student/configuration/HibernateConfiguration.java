@@ -28,7 +28,7 @@ public class HibernateConfiguration {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("pl.agh.student.model");
+        sessionFactory.setPackagesToScan("pl.agh.student.persistence.model");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

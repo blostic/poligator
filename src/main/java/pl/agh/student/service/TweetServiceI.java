@@ -1,6 +1,6 @@
 package pl.agh.student.service;
 
-import pl.agh.student.model.Tweet;
+import pl.agh.student.persistence.model.Tweet;
 
 import java.util.List;
 
