@@ -4,7 +4,6 @@ import org.joda.time.LocalDate;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import pl.agh.student.configuration.AppConfig;
-import pl.agh.student.persistence.dao.UserDao;
 import pl.agh.student.persistence.model.Tweet;
 import pl.agh.student.persistence.model.User;
 import pl.agh.student.service.TweetExtractor;
@@ -28,6 +27,7 @@ public class PoligatorMain {
 
         User user = new User();
         user.setName("TEST");
+        user.setScreenName("Test");
         user.setId(123);
         userService.saveUser(user);
 
