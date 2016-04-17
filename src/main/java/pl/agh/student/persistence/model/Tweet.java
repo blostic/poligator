@@ -4,6 +4,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "TWEET")
@@ -13,7 +14,7 @@ public class Tweet {
     @Column(name = "ID", nullable = false)
     private long id;
 
-    @Column(name = "TWEET_TEXT", nullable = false)
+    @Column(name = "TEXT", nullable = false)
     private String text;
 
     @Column(name = "CREATE_DATE", nullable = false)
@@ -21,8 +22,26 @@ public class Tweet {
     private LocalDate createDate;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
+
+    @Column(name = "RETWEET_COUNT")
+    private int retweetCount;
+
+    @Column(name = "RETWEETED")
+    private boolean retweeted;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User inReplyToUserId;
+
+    @ElementCollection
+    @CollectionTable(name = "HASHTAGS", joinColumns = {@JoinColumn(name = "TWEET_ID")})
+    private ArrayList<String> hashtags;
+
+    @ElementCollection
+    @CollectionTable(name = "USER_MENTIONS", joinColumns = {@JoinColumn(name = "TWEET_ID")})
+    private ArrayList<String> userMentions;
 
     public long getId() {
         return id;
@@ -40,6 +59,14 @@ public class Tweet {
         this.text = text;
     }
 
+    public LocalDate getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDate createDate) {
+        this.createDate = createDate;
+    }
+
     public User getUser() {
         return user;
     }
@@ -48,11 +75,44 @@ public class Tweet {
         this.user = user;
     }
 
-    public LocalDate getCreateDate() {
-        return createDate;
+    public int getRetweetCount() {
+        return retweetCount;
     }
 
-    public void setCreateDate(LocalDate createDate) {
-        this.createDate = createDate;
+    public void setRetweetCount(int retweetCount) {
+        this.retweetCount = retweetCount;
     }
+
+    public boolean isRetweeted() {
+        return retweeted;
+    }
+
+    public void setRetweeted(boolean retweeted) {
+        this.retweeted = retweeted;
+    }
+
+    public User getInReplyToUserId() {
+        return inReplyToUserId;
+    }
+
+    public void setInReplyToUserId(User inReplyToUserId) {
+        this.inReplyToUserId = inReplyToUserId;
+    }
+
+    public ArrayList<String> getHashtags() {
+        return hashtags;
+    }
+
+    public void setHashtags(ArrayList<String> hashtags) {
+        this.hashtags = hashtags;
+    }
+
+    public ArrayList<String> getUserMentions() {
+        return userMentions;
+    }
+
+    public void setUserMentions(ArrayList<String> userMentions) {
+        this.userMentions = userMentions;
+    }
+
 }
