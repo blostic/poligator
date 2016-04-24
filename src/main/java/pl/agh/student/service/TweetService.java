@@ -1,6 +1,7 @@
 package pl.agh.student.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.agh.student.persistence.dao.TweetDao;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Service("tweetService")
 @Transactional
-public class TweetService implements TweetServiceI {
+public class TweetService {
 
     @Autowired
     private TweetDao dao;

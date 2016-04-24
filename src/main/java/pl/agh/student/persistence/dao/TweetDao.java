@@ -2,12 +2,13 @@ package pl.agh.student.persistence.dao;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import pl.agh.student.persistence.model.Tweet;
 
 import java.util.List;
 
-@Repository("twitterDao")
+@Component
 public class TweetDao extends AbstractDao {
 
     public void saveTweet(Tweet tweet) {
