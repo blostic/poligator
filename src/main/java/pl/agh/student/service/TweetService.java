@@ -26,4 +26,8 @@ public class TweetService implements TweetServiceI {
     public void updateTweet(Tweet tweet) {
         dao.updateTweet(tweet);
     }
+
+    public Tweet getById(long i) {
+        return dao.findById(i);
+    }
 }

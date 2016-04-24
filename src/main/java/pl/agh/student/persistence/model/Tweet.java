@@ -4,7 +4,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "TWEET")
@@ -14,7 +14,7 @@ public class Tweet {
     @Column(name = "ID", nullable = false)
     private long id;
 
-    @Column(name = "TEXT", nullable = false)
+    @Column(name = "TWEET_TEXT", nullable = false)
     private String text;
 
     @Column(name = "CREATE_DATE", nullable = false)
@@ -31,17 +31,17 @@ public class Tweet {
     @Column(name = "RETWEETED")
     private boolean retweeted;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
-    private User inReplyToUserId;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "USER_ID")
+//    private User inReplyToUserId;
 
     @ElementCollection
-    @CollectionTable(name = "HASHTAGS", joinColumns = {@JoinColumn(name = "TWEET_ID")})
-    private ArrayList<String> hashtags;
+    @CollectionTable(name = "HASHTAGS", joinColumns = @JoinColumn(name = "TWEET_ID"))
+    private List<String> hashtags;
 
     @ElementCollection
-    @CollectionTable(name = "USER_MENTIONS", joinColumns = {@JoinColumn(name = "TWEET_ID")})
-    private ArrayList<String> userMentions;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "ID")
+    private List<User> userMentions;
 
     public long getId() {
         return id;
@@ -91,27 +91,27 @@ public class Tweet {
         this.retweeted = retweeted;
     }
 
-    public User getInReplyToUserId() {
-        return inReplyToUserId;
-    }
+//    public User getInReplyToUserId() {
+//        return inReplyToUserId;
+//    }
+//
+//    public void setInReplyToUserId(User inReplyToUserId) {
+//        this.inReplyToUserId = inReplyToUserId;
+//    }
 
-    public void setInReplyToUserId(User inReplyToUserId) {
-        this.inReplyToUserId = inReplyToUserId;
-    }
-
-    public ArrayList<String> getHashtags() {
+    public List<String> getHashtags() {
         return hashtags;
     }
 
-    public void setHashtags(ArrayList<String> hashtags) {
+    public void setHashtags(List<String> hashtags) {
         this.hashtags = hashtags;
     }
 
-    public ArrayList<String> getUserMentions() {
+    public List<User> getUserMentions() {
         return userMentions;
     }
 
-    public void setUserMentions(ArrayList<String> userMentions) {
+    public void setUserMentions(List<User> userMentions) {
         this.userMentions = userMentions;
     }
 

@@ -11,4 +11,6 @@ public interface TweetServiceI {
     List<Tweet> findAllTweets();
 
     void updateTweet(Tweet tweet);
+
+    Tweet getById(long i);
 }
