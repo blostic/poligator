@@ -41,7 +41,10 @@ public class Tweet {
     private List<String> hashtags;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @ManyToMany(mappedBy = "ID")
+    @ManyToMany
+    @JoinTable(name = "USER_MENTIONS",
+            joinColumns = @JoinColumn(name = "TWEET_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"))
     private List<User> userMentions;
 
     public long getId() {
