@@ -13,6 +13,7 @@ import twitter4j.Status;
 import twitter4j.TwitterException;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class PoligatorMain {
@@ -21,25 +22,31 @@ public class PoligatorMain {
         TweetServiceI twitterService = (TweetServiceI) context.getBean("tweetService");
         UserService userService =  (UserService) context.getBean("userService");
 
-//        Tweet tweet = new Tweet();
-//        tweet.setId(1L);
-//        tweet.setText("Some tweet Test");
-//        tweet.setCreateDate(new LocalDate());
-//        tweet.setHashtags(Arrays.asList("Hash1", "Hash2", "Hash3"));
-//        User user = new User();
-//        user.setName("TEST");
-//        user.setScreenName("Test");
-//        user.setId(123);
-//        userService.saveUser(user);
+        Tweet tweet = new Tweet();
+        tweet.setId(1L);
+        tweet.setText("Some tweet Test");
+        tweet.setCreateDate(new LocalDate());
+        tweet.setHashtags(Arrays.asList("Hash1", "Hash2", "Hash3"));
+        User user = new User();
+        user.setName("TEST");
+        user.setScreenName("Test");
+        user.setId(123);
+        userService.saveUser(user);
+
+        tweet.setUser(user);
+        tweet.setInReplyToUser(user);
+//        tweet.setUserMentions(Collections.singletonList(user));
+        twitterService.saveTweet(tweet);
+
+//        Tweet tweet = twitterService.getById(1L);
 //
-//        tweet.setUser(user);
-//        twitterService.saveTweet(tweet);
-
-        Tweet tweet = twitterService.getById(1L);
-
-        List<String> hashtags = tweet.getHashtags();
-        System.err.println(hashtags);
-        hashtags.forEach(System.err::println);
+//        List<String> hashtags = tweet.getHashtags();
+//        System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+//        System.err.println(tweet.getUser().getName());
+//        System.err.println(tweet.getInReplyToUser().getName());
+//        System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!1111");
+//        System.err.println(hashtags);
+//        hashtags.forEach(System.err::println);
     }
 
     private static void testTwitter(AbstractApplicationContext context) throws TwitterException {

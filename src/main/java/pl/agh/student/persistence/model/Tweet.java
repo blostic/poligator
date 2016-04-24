@@ -1,6 +1,5 @@
 package pl.agh.student.persistence.model;
 
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
@@ -33,15 +32,15 @@ public class Tweet {
     @Column(name = "RETWEETED")
     private boolean retweeted;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "USER_ID")
-//    private User inReplyToUserId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IN_REPLY_TO_USER_ID")
+    private User inReplyToUser;
 
-    @ElementCollection(fetch=FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "HASHTAGS", joinColumns = @JoinColumn(name = "TWEET_ID"))
     private List<String> hashtags;
 
-    @ElementCollection(fetch=FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER)
     @ManyToMany(mappedBy = "ID")
     private List<User> userMentions;
 
@@ -93,13 +92,13 @@ public class Tweet {
         this.retweeted = retweeted;
     }
 
-//    public User getInReplyToUserId() {
-//        return inReplyToUserId;
-//    }
-//
-//    public void setInReplyToUserId(User inReplyToUserId) {
-//        this.inReplyToUserId = inReplyToUserId;
-//    }
+    public User getInReplyToUser() {
+        return inReplyToUser;
+    }
+
+    public void setInReplyToUser(User inReplyToUser) {
+        this.inReplyToUser = inReplyToUser;
+    }
 
     public List<String> getHashtags() {
         if (hashtags == null) {
@@ -113,6 +112,9 @@ public class Tweet {
     }
 
     public List<User> getUserMentions() {
+        if (userMentions == null) {
+            userMentions = new ArrayList<>();
+        }
         return userMentions;
     }
 
