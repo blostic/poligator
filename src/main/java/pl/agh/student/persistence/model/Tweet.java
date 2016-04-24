@@ -1,9 +1,11 @@
 package pl.agh.student.persistence.model;
 
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,12 +37,12 @@ public class Tweet {
 //    @JoinColumn(name = "USER_ID")
 //    private User inReplyToUserId;
 
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.EAGER)
     @CollectionTable(name = "HASHTAGS", joinColumns = @JoinColumn(name = "TWEET_ID"))
     private List<String> hashtags;
 
-    @ElementCollection
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "ID")
+    @ElementCollection(fetch=FetchType.EAGER)
+    @ManyToMany(mappedBy = "ID")
     private List<User> userMentions;
 
     public long getId() {
@@ -100,6 +102,9 @@ public class Tweet {
 //    }
 
     public List<String> getHashtags() {
+        if (hashtags == null) {
+            this.hashtags = new ArrayList<>();
+        }
         return hashtags;
     }
 
