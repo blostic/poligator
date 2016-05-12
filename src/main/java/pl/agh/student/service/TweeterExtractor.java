@@ -49,6 +49,20 @@ public class TweeterExtractor {
         LOGGER.info("" + userTimeline.size() + " tweets downloaded using " + it + " request.");
         return userTimeline;
     }
+    
+    public ResponseList<Status> getTweetByAccountId(String userName) throws NumberFormatException, TwitterException {
+    	final Twitter twitter = new TwitterFactory(configuration.getConfiguration()).getInstance();
+        int currentSize = 0;
+        ResponseList<Status> userTimeline = twitter.getUserTimeline(userName, new Paging(1, 200));
+        int it = 1;
+        while (userTimeline.size() - currentSize > 0) {
+            currentSize = userTimeline.size();
+            userTimeline.addAll(twitter.getUserTimeline(userName, new Paging(it++, 200)));
+        }
+        LOGGER.info("" + userTimeline.size() + " tweets downloaded using " + it + " request.");
+        return userTimeline;
+    }
+
 
 
     //TODO
