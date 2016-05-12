@@ -3,16 +3,20 @@ package pl.agh.student;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import pl.agh.student.persistence.model.Tweet;
 import pl.agh.student.persistence.model.User;
 import pl.agh.student.service.TweetExtractor;
 import pl.agh.student.service.TweetService;
 import pl.agh.student.service.UserService;
+import twitter4j.HashtagEntity;
+import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -60,6 +64,47 @@ public class Poligator {
 
         List<Status> statusList = extractor.getTweetByIds(new long[]{711210298301136896L, 710550160380731393L});
         statusList.forEach(status -> System.err.println(status.getText()));
+        statusList.forEach(status -> System.out.println(status.getUser()));
     }
+    
+    public void pullData(List<String> accounts) throws NumberFormatException, TwitterException{
+    	
+    	accounts.forEach(account -> {
+    		ResponseList<Status> statuses = null;
+			try {
+				statuses = extractor.getTweetByAccountId(account);
+	    		statuses.forEach(status -> addToDatabase(status));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+    	});
+    	
+    }
+
+    //TODO
+	private void addToDatabase(Status status) {
+		Tweet tweet = new Tweet();
+		User user = getUser(status);
+
+		
+		List<String> hashtags = new LinkedList<String>();
+		HashtagEntity[] hts = status.getHashtagEntities();
+		for(int i = 0; i < hts.length; i++)
+		{
+		    hashtags.add(hts[i].getText());
+		}
+		tweet.setHashtags(hashtags);
+		tweet.setText(status.getText());
+//		twitterService.saveTweet(tweet);
+	}
+
+	//TODO
+	private User getUser(Status status) {
+		User user = new User();
+		user.setName(status.getUser().getName());
+//		userService.saveUser(user);
+		
+		return user;
+	}
 
 }
