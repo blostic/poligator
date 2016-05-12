@@ -7,14 +7,17 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import pl.agh.student.configuration.TwitterConfiguration;
+import pl.agh.student.persistence.model.Tweet;
 import twitter4j.*;
+
+import java.util.Set;
 
 @ComponentScan({"pl.agh.student.configuration"})
 @EnableTransactionManagement
-@Service("tweetExtractor")
-public class TweetExtractor {
+@Service("tweeterExtractor")
+public class TweeterExtractor {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(TweetExtractor.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(TweeterExtractor.class);
 
     @Autowired
     private TwitterConfiguration configuration;
@@ -47,4 +50,9 @@ public class TweetExtractor {
         return userTimeline;
     }
 
+
+    //TODO
+    public Set<Tweet> getAvailableTweetsByAccountUsername(String username) {
+        return null;
+    }
 }

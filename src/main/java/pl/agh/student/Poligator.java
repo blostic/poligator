@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.agh.student.persistence.model.Tweet;
 import pl.agh.student.persistence.model.User;
-import pl.agh.student.service.TweetExtractor;
+import pl.agh.student.service.TweeterExtractor;
 import pl.agh.student.service.TweetService;
 import pl.agh.student.service.UserService;
 import twitter4j.Status;
@@ -20,7 +20,7 @@ import java.util.Random;
 public class Poligator {
 
     @Autowired
-    private TweetExtractor extractor;
+    private TweeterExtractor extractor;
 
     @Autowired
     private TweetService twitterService;
@@ -35,12 +35,14 @@ public class Poligator {
         tweet.setCreateDate(new LocalDate());
         tweet.setHashtags(Arrays.asList("Hash1", "Hash2", "Hash3"));
         User user = new User();
+        user.setRawData("sme test");
         user.setName("TEST");
         user.setScreenName("Test");
         user.setId(new Random().nextInt());
         userService.saveUser(user);
 
         tweet.setUser(user);
+        tweet.setRawData("sme test");
         tweet.setInReplyToUser(user);
         tweet.setUserMentions(Collections.singletonList(user));
         twitterService.saveTweet(tweet);

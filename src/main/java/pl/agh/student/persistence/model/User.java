@@ -1,8 +1,5 @@
 package pl.agh.student.persistence.model;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,6 +12,9 @@ public class User {
     @Id
     @Column(name = "ID", nullable = false)
     private long id;
+
+    @Column(name = "RAW_DATA", nullable = false)
+    private String rawData;
 
     @Column(name = "NAME", nullable = false)
     private String name;
@@ -123,4 +123,11 @@ public class User {
         this.friendsCount = friendsCount;
     }
 
+    public String getRawData() {
+        return rawData;
+    }
+
+    public void setRawData(String rawData) {
+        this.rawData = rawData;
+    }
 }

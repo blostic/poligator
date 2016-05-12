@@ -15,6 +15,9 @@ public class Tweet {
     @Column(name = "ID", nullable = false)
     private long id;
 
+    @Column(name = "RAW_DATA", nullable = false)
+    private String rawData;
+
     @Column(name = "TWEET_TEXT", nullable = false)
     private String text;
 
@@ -125,4 +128,11 @@ public class Tweet {
         this.userMentions = userMentions;
     }
 
+    public String getRawData() {
+        return rawData;
+    }
+
+    public void setRawData(String rawData) {
+        this.rawData = rawData;
+    }
 }
