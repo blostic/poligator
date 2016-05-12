@@ -75,7 +75,13 @@ public class Poligator {
     		ResponseList<Status> statuses = null;
 			try {
 				statuses = extractor.getTweetByAccountId(account);
-	    		statuses.forEach(status -> addToDatabase(status));
+				User user = new User();
+				if(statuses.size() > 0) {
+					user = insertUser(statuses.get(0));
+				}
+				for (Status status : statuses) {
+					addToDatabase(status, user);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -84,10 +90,10 @@ public class Poligator {
     }
 
     //TODO
-	private void addToDatabase(Status status) {
+	private void addToDatabase(Status status, User user) {
 		Tweet tweet = new Tweet();
-		User user = getUser(status);
-
+		tweet.setId(status.getId());
+		tweet.setUser(user);
 		
 		List<String> hashtags = new LinkedList<String>();
 		HashtagEntity[] hts = status.getHashtagEntities();
@@ -97,14 +103,30 @@ public class Poligator {
 		}
 		tweet.setHashtags(hashtags);
 		tweet.setText(status.getText());
-//		twitterService.saveTweet(tweet);
+		tweet.setRawData(status.getSource());
+		tweet.setCreateDate(LocalDate.fromDateFields(status.getCreatedAt()));
+		
+		try {
+			twitterService.saveTweet(tweet);
+		} catch (Exception e) {
+			System.err.println("Error while adding tweet");
+		}
 	}
 
 	//TODO
-	private User getUser(Status status) {
+	private User insertUser(Status status) {
+		twitter4j.User twitterUser = status.getUser();
 		User user = new User();
-		user.setName(status.getUser().getName());
-//		userService.saveUser(user);
+		user.setId(twitterUser.getId());
+		user.setName(twitterUser.getName());
+		user.setRawData(twitterUser.getDescription());
+		user.setScreenName(twitterUser.getScreenName());
+		user.setDescription(twitterUser.getDescription());
+		try {
+			userService.saveUser(user);
+		} catch (Exception e) {
+			System.err.println("Error while adding user");
+		}
 		
 		return user;
 	}
