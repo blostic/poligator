@@ -26,6 +26,11 @@ public class TweeterExtractor {
         final Twitter twitter = new TwitterFactory(configuration.getConfiguration()).getInstance();
         return twitter.showStatus(Long.parseLong(tweetId));
     }
+    
+    public User getUserById(long userId) throws TwitterException {
+        final Twitter twitter = new TwitterFactory(configuration.getConfiguration()).getInstance();
+        return twitter.showUser(userId);
+    }
 
     public ResponseList<Status> getTweetByIds(long[] ids) throws NumberFormatException, TwitterException {
         final Twitter twitter = new TwitterFactory(configuration.getConfiguration()).getInstance();

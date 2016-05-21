@@ -2,6 +2,7 @@
 @Palikot_Janusz
 @JerzyBuzek
 @AndrzejDuda
+@donaldtusk
 @RyszardKalisz
 @AdamHofman
 @LBalcerowicz
